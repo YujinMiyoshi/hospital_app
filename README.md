@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+##環境
+>Next.js 14.1.3
+>Python 3.9.13
 
-## Getting Started
 
-First, run the development server:
+##始めるには
+###必要なパッケージをインストール
+'''
+npm i lucide-react next-auth react-hot-toast react-images-uploading date-fns react-hook-form tailwindcss
+'''
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+###必要なライブラリをインストール
+'''
+pip install -r requirements.txt
+'''
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+###.envファイルを設置（変数の中身は適宜変更）
+>./.env
+"""
+NEXT_PUBLIC_API_URL=http://localhost:5000
+"""
+>./backend/.env
+"""
+SITE_DOMAIN=http://localhost:3000
+"""
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+###変数を設定
+####linux、macの場合
+"""
+export NEXT_PUBLIC_API_URL=http://localhost:5000
+export SITE_DOMAIN=http://localhost:3000
+"""
+####windowsの場合
+"""
+set NEXT_PUBLIC_API_URL=http://localhost:5000
+set SITE_DOMAIN=http://localhost:3000
+"""
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+###フロントエンド立ち上げ
+"""
+npm run start
+"""
+>番号入力ページ（例）
+>http://localhost:3000/input
+>番号表示ページ（例）
+>http://localhost:3000/display
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+###バックエンド立ち上げ
+"""
+cd backend
+python api.py
+"""
