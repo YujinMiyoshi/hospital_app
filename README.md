@@ -43,7 +43,7 @@ npm run start
 ```
 >番号入力ページ（例）
 >http://localhost:3000/input
-
+>
 >番号表示ページ（例）
 >http://localhost:3000/display
 
