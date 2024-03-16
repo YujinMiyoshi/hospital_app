@@ -49,7 +49,7 @@ def save_number():
 @app.route('/api/numbers/', methods=['GET'])
 def get_numbers():
     db = get_db_connection()
-    numbers = db.execute('SELECT number FROM numbers ORDER BY id DESC LIMIT 10').fetchall()
+    numbers = db.execute('SELECT number FROM numbers ORDER BY id DESC LIMIT 1').fetchall()
     
     return jsonify([number['number'] for number in numbers]), 200
 

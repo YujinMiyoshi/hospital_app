@@ -24,6 +24,10 @@ const SimpleNumberForm = () => {
     setTimeout(() => setActiveButton(null), 200);
   };
 
+  const handleDelete = () => {
+    setValue("number", number.slice(0, -1)); // 最後の文字を削除
+  };
+
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
     try {
@@ -41,26 +45,36 @@ const SimpleNumberForm = () => {
     }
   };
 
-  const baseStyle = "text-sm rounded-lg focus:outline-none focus:shadow-outline block w-full h-20 transition duration-150 ease-in-out shadow-sm";
-  const activeStyle = "bg-gray-100 text-blue-700 shadow-lg";
-  const inactiveStyle = "bg-gray-50 text-gray-900 hover:bg-gray-100";
+  const baseStyle = "text-3xl rounded-lg focus:outline-none focus:shadow-outline block w-24 h-24 transition duration-150 ease-in-out shadow-sm";
+  const activeStyle = "bg-gray-300 text-blue-700 shadow-lg";
+  const inactiveStyle = "bg-gray-200 text-gray-900 hover:bg-gray-300";
+  const deleteButtonStyle = "ml-2 text-xl bg-gray-200 hover:bg-gray-300 p-2 rounded-lg"; // 削除ボタンのスタイル
 
   return (
     <div className="bg-white">
       <div className="text-2xl font-bold text-center mb-5 text-gray-800">受付番号入力</div>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 max-w-xs m-auto">
-        <input
-          id="number"
-          type="text"
-          {...register("number", { required: true })}
-          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-200 focus:border-blue-200 block w-full p-2.5 mb-5 shadow-inner"
-          placeholder="数字を入力"
-          readOnly
-        />
-        <div className="grid grid-cols-3 gap-2 justify-center items-center max-w-xs m-auto">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 max-w-xs m-auto bg-white">
+        <div className="flex items-center">
+          <input
+            id="number"
+            type="text"
+            {...register("number", { required: true })}
+            className="bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-200 focus:border-blue-200 block w-full p-2.5 mb-5 shadow-inner"
+            placeholder="数字を入力"
+            readOnly
+          />
+          <button
+            type="button"
+            onClick={handleDelete}
+            className={deleteButtonStyle}
+          >
+            ⌫
+          </button>
+        </div>
+        <div className="grid grid-cols-3 gap-4 justify-center items-center max-w-xs m-auto bg-white">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num, index) => (
             <button
-              key={num}
+              key={index}
               type="button"
               onClick={() => handleNumberClick(num.toString())}
               className={`${baseStyle} ${activeButton === num ? activeStyle : inactiveStyle}`}
