@@ -20,20 +20,9 @@ def get_db_connection():
 def init_db():
     with app.app_context():
         db = get_db_connection()
-        db.execute('CREATE TABLE IF NOT EXISTS numbers (id INTEGER PRIMARY KEY AUTOINCREMENT, number INTEGER)')
+        # Ensure the table exists but does not need to prepare for multiple records
+        db.execute('CREATE TABLE IF NOT EXISTS numbers (id INTEGER PRIMARY KEY, number INTEGER)')
         db.commit()
-
-def trim_numbers():
-    with app.app_context():
-        db = get_db_connection()
-        # 最新の20件のidを取得
-        ids = db.execute('SELECT id FROM numbers ORDER BY id DESC LIMIT 20').fetchall()
-        if ids:
-            # 最も古い保持するidを特定
-            min_id_to_keep = ids[-1]['id']
-            # それより古いレコードを削除
-            db.execute('DELETE FROM numbers WHERE id < ?', (min_id_to_keep,))
-            db.commit()
 
 @app.route('/api/numbers/', methods=['POST'])
 def save_number():
@@ -41,7 +30,14 @@ def save_number():
     number = data.get('number')
     
     db = get_db_connection()
-    db.execute('INSERT INTO numbers (number) VALUES (?)', (number,))
+    # Check if a record exists
+    exists = db.execute('SELECT 1 FROM numbers WHERE id = 1').fetchone()
+    if exists:
+        # Update the existing record
+        db.execute('UPDATE numbers SET number = ? WHERE id = 1', (number,))
+    else:
+        # Insert a new record if no record exists
+        db.execute('INSERT INTO numbers (id, number) VALUES (1, ?)', (number,))
     db.commit()
     
     return jsonify(success=True), 200
@@ -49,13 +45,17 @@ def save_number():
 @app.route('/api/numbers/', methods=['GET'])
 def get_numbers():
     db = get_db_connection()
-    numbers = db.execute('SELECT number FROM numbers ORDER BY id DESC LIMIT 1').fetchall()
-    
-    return jsonify([number['number'] for number in numbers]), 200
+    number = db.execute('SELECT number FROM numbers WHERE id = 1').fetchone()
+    return jsonify(number['number'] if number else None), 200
+
+@app.route('/api/numbers/', methods=['DELETE'])
+def delete_number():
+    db = get_db_connection()
+    db.execute('DELETE FROM numbers WHERE id = 1')
+    db.commit()
+    db.close()
+    return jsonify(success=True), 200
 
 if __name__ == '__main__':
     init_db()
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(func=trim_numbers, trigger="interval", hours=12)
-    scheduler.start()
     app.run(debug=False, use_reloader=False)

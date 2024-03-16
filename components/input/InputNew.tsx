@@ -3,6 +3,9 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import { createInput } from "@/actions/input";
+import NumberDisplayModal from "@/components/input/NumberDisplayModal"; 
+import { FaEye } from "react-icons/fa";
+
 
 type FormData = {
   number: string;
@@ -10,6 +13,7 @@ type FormData = {
 
 const SimpleNumberForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { register, handleSubmit, setValue, watch, reset } = useForm<FormData>({
     defaultValues: {
       number: "",
@@ -46,13 +50,18 @@ const SimpleNumberForm = () => {
   };
 
   const baseStyle = "text-3xl rounded-lg focus:outline-none focus:shadow-outline block w-24 h-24 transition duration-150 ease-in-out shadow-sm";
-  const activeStyle = "bg-gray-300 text-blue-700 shadow-lg";
+  const activeStyle = "bg-gray-300 text-gray-700 shadow-lg";
   const inactiveStyle = "bg-gray-200 text-gray-900 hover:bg-gray-300";
   const deleteButtonStyle = "ml-2 text-xl bg-gray-200 hover:bg-gray-300 p-2 rounded-lg"; // 削除ボタンのスタイル
+  const showModalButtonStyle = "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center transition duration-150 ease-in-out transform hover:-translate-y-1 hover:scale-110"; // モーダル表示ボタンのスタイル
 
   return (
     <div className="bg-white">
-      <div className="text-2xl font-bold text-center mb-5 text-gray-800">受付番号入力</div>
+      <button onClick={() => setShowModal(true)} className={showModalButtonStyle}>
+        <FaEye className="mr-2"/>
+        表示中番号
+      </button>
+      {showModal && <NumberDisplayModal onClose={() => setShowModal(false)} />}      <div className="text-2xl font-bold text-center mb-5 text-gray-800">受付番号入力</div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 max-w-xs m-auto bg-white">
         <div className="flex items-center">
           <input

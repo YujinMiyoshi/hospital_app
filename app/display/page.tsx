@@ -23,11 +23,22 @@ const Display = () => {
   }, []);
 
   if (error) {
-    return <div className="text-center text-sm text-gray-500">受付番号の取得に失敗しました</div>;
-  }
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: 'white' }}>
+        <h1 style={{ fontSize: '4rem', fontWeight: 'bold', color: 'gray' }}> {/* フォントサイズを調整 */}
+          受付番号の取得に失敗しました。
+        </h1>
+      </div>
+    );  }
 
   if (number === null) {
-    return <div className="text-center text-sm text-gray-500">受付番号がありません</div>;
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: 'white' }}>
+        <h1 style={{ fontSize: '4rem', fontWeight: 'bold', color: 'gray' }}> {/* フォントサイズを調整 */}
+          受付番号がありません。
+        </h1>
+      </div>
+    );
   }
 
   // 中央配置と大きなフォントサイズで表示

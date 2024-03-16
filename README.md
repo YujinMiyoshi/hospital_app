@@ -7,7 +7,7 @@
 ## 始めるには
 ### 必要なパッケージをインストール
 ```
-npm i lucide-react next-auth react-hot-toast react-images-uploading date-fns react-hook-form tailwindcss
+npm i lucide-react next-auth react-hot-toast react-images-uploading date-fns react-hook-form tailwindcss react-icons
 ```
 
 ### 必要なライブラリをインストール
@@ -39,6 +39,7 @@ set SITE_DOMAIN=http://localhost:3000
 
 ### フロントエンド立ち上げ
 ```
+npm run build
 npm run start
 ```
 >番号入力ページ（例）

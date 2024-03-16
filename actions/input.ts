@@ -56,3 +56,23 @@ const fetchAPI = async (url: string, options: RequestInit) => {
     return { success: true };
   };
   
+
+  export const deleteNumber = async () => {
+    const options = {
+      method: "DELETE", // HTTPメソッドをDELETEに設定
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+  
+    // 数字データをAPIから削除
+    const result = await fetchAPI("/api/numbers/", options);
+  
+    if (!result.success) {
+      console.error(result.error);
+      return { success: false, error: result.error };
+    }
+  
+    // 削除成功を返します
+    return { success: true };
+  };
