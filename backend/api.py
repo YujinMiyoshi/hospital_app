@@ -58,4 +58,4 @@ def delete_number():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=False, use_reloader=False)
+    app.run(host='0.0.0.0', debug=False, use_reloader=False)

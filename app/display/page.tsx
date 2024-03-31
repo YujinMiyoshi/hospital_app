@@ -41,14 +41,16 @@ const Display = () => {
     );
   }
 
-  // 中央配置と大きなフォントサイズで表示
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: 'white' }}>
-      <h1 style={{ fontSize: '4rem', fontWeight: 'bold', color: 'gray' }}> {/* フォントサイズを調整 */}
-        {number}番の方お入りください。
-      </h1>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: 'white' }}>
+      <div style={{ marginBottom: '3rem', textAlign: 'center' }}>
+        <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: 'gray', marginBottom: '0.5rem' }}>受付番号</h2>
+        <h1 style={{ fontSize: '25rem', fontWeight: 'bold', color: 'brack' }}>{number}</h1>
+      </div>
+      <h3 style={{ fontSize: '2rem', color: 'gray' }}>診察室へお越しください</h3>
     </div>
   );
+  
 };
 
 export default Display;
